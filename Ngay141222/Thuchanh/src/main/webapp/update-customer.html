@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <style>
+    a{
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" >
+    <h1>Update Customer</h1>
+    <form th:action="${customer.id} != 0 ? '/customer/update' : '/customer/create'" method="post" th:object="${customer}">
+      <table class="table table-danger" >
+        <input type="hidden" name="id" th:field="*{id}" >
+        <tr>
+          <th>Name</th>
+          <td><input type="text" name="name" th:field="*{name}">
+          </td>
+        </tr>
+        <tr>
+          <th>Email</th>
+          <td><input type="text" name="email" th:field="*{email}">
+          </td>
+        </tr>
+        <tr>
+          <th>Address</th>
+          <td><input type="text" name="address" th:field="*{address}">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input type="submit" th:value="${customer.id} != 0 ? 'Update' : 'Create'" class="btn btn-primary" />
+            <a style="color: white" type="button" class="btn btn-primary" th:href="@{/customer/home}">Back</a>
+          </td>
+          <td></td>
+        </tr>
+      </table>
+    </form>
+  </div>
+</body>
+</html>

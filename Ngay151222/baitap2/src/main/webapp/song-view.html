@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <style>
+    a{
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+<div class="container" >
+  <form th:action="@{/song/save}" method="post"  enctype="multipart/form-data">
+    <table class="table table-danger" >
+      <input type="hidden" >
+      <tr>
+        <th>Name</th>
+        <td><input type="text" name="name" required>
+        </td>
+      </tr>
+      <tr>
+        <th>Singer</th>
+        <td><input type="text" name="singer" required>
+        </td>
+      </tr>
+      <tr>
+        <th>Category</th>
+        <td><input type="text" name="category" required></td>
+      </tr>
+      <tr>
+        <td>Link song</td>
+        <td><input type="file" name="file" /></td>
+      </tr>
+      <tr>
+        <td>
+          <button type="submit" class="btn btn-primary" >Create</button>
+        </td>
+        <td></td>
+      </tr>
+    </table>
+  </form>
+</div>
+</body>
+</html>
