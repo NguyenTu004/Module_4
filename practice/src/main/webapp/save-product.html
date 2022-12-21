@@ -39,8 +39,12 @@
                 </td>
             </tr>
             <tr>
-                <td><label>Image</label></td>
-                <td><input type="file" th:field="*{img}"/></td>
+                <th><label>File image</label></th>
+                <td>
+                    <img th:if="${product.id} != 0 " width="100" height="100" th:src="@{'/image/' + ${product.img}}" alt="" />
+                    <br th:if="${product.id} != 0 "/>
+                    <input type="file" name="file" />
+                </td>
             </tr>
             <tr>
                 <td>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <style>
+    a{
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>List product</h1>
+  <form action="/customer/search">
+    <label for="search"><button type="submit" class="btn btn-primary">Search</button></label>
+    <input type="text" name="search" id="search"><br>
+  </form>
+  <br>
+  <a th:href="@{/product/save}" style="color: white" class="btn btn-primary">Create</a>
+  <table class="table table-hover">
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Category</th>
+      <th>Action</th>
+    </tr>
+    <tr th:each="p : ${productList}">
+      <td ><a th:href="@{/customer/detail/{id}(id=${p.getId()})}" th:text="*{p.name}"></a></td>
+      <td th:text="*{p.price}"></td>
+      <td th:text="*{p.category.getName()}"></td>
+      <td>
+        <a class="btn btn-primary" th:href="@{/product/save/{id}(id=*{p.id})}" style="color: white">
+          Update</a>
+        <a class="btn btn-primary" th:href="@{/product/delete/{id}(id=*{p.id})}" style="color: white"
+           onclick="return deleteProduct()">Delete</a>
+      </td>
+    </tr>
+  </table>
+</div>
+</body>
+<script>
+  function deleteProduct() {
+    return confirm("Bạn chắc chắn muốn xóa chứ!!!")
+  }
+</script>
+</html>

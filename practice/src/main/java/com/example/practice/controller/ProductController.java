@@ -1,7 +1,6 @@
 package com.example.practice.controller;
 
 import com.example.practice.model.Product;
-import com.example.practice.model.ProductForm;
 import com.example.practice.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,17 +35,17 @@ public class ProductController {
         return "save-product";
     }
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    String save (@ModelAttribute ProductForm productForm, @RequestParam("categoryId") long id){
-        productForm.setCategory(productService.findByIdCategory(id));
-        MultipartFile multipartFile = productForm.getImg();
+    String save (@ModelAttribute Product product,
+                 @RequestParam("categoryId") long id,
+                 @RequestParam("file") MultipartFile multipartFile){
         String fileName = multipartFile.getOriginalFilename();
         try {
-            FileCopyUtils.copy(productForm.getImg().getBytes(), new File(fileUpload + fileName));
+            FileCopyUtils.copy(multipartFile.getBytes(), new File(fileUpload + fileName));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        Product product = new Product(productForm.getId(), productForm.getName(),
-                productForm.getPrice(),productForm.getCategory(), fileName);
+        product.setImg(fileName);
+        product.setCategory(productService.findByIdCategory(id));
         productService.saveProduct(product);
         return "redirect:/product/home";
     }

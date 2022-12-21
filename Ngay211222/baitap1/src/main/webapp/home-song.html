@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+  <div class="container">
+      <h1>Home</h1>
+      <a class="btn btn-primary" th:href="@{/song/save/0}">Create</a>
+    <table class="table table-view">
+        <tr>
+          <th>Name</th>
+          <th>Singer</th>
+          <th>Category</th>
+          <th>Video</th>
+        </tr>
+        <tr th:each="s,sta : ${songs}">
+            <td th:text="${s.name}"></td>
+            <td th:text="${s.singer}"></td>
+            <td th:text="${s.category}"></td>
+            <td>
+                <video  th:src="@{'/music/'+${s.link}}" controls></video>
+            </td>
+        </tr>
+    </table>
+  </div>
+</body>
+</html>
