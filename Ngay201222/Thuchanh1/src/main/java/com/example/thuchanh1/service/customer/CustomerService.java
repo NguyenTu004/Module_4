@@ -21,8 +21,12 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public Optional<Customer> findById(Long id) {
-        return customerRepository.findById(id);
+    public Optional<Customer> findById(Long id) throws Exception  {
+        Optional<Customer> customerOptional = customerRepository.findById(id);
+        if (!customerOptional.isPresent()) {
+            throw new Exception("customer not found!");
+        }
+        return customerOptional;
     }
 
     @Override
@@ -41,7 +45,8 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public Page<Customer> findAll(Pageable pageable) {
+    public Page<Customer> findAll(Pageable pageable) throws Exception {
+        if (true) throw new Exception("a dummy exception");
         return customerRepository.findAll(pageable);
     }
 

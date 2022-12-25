@@ -3,9 +3,9 @@ package com.example.thuchanh1.service;
 import java.util.Optional;
 
 public interface IGeneralService<T> {
-    Iterable<T> findAll();
+    Iterable<T> findAll() ;
 
-    Optional<T> findById(Long id);
+    Optional<T> findById(Long id) throws Exception ;
 
     void save(T t);
 

@@ -50,15 +50,19 @@ public class ProvinceController {
 
     @GetMapping("/edit-province/{id}")
     public ModelAndView showEditForm(@PathVariable Long id) {
-        Optional<Province> province = provinceService.findById(id);
-        if (province.isPresent()) {
-            ModelAndView modelAndView = new ModelAndView("/province/edit");
-            modelAndView.addObject("province", province.get());
-            return modelAndView;
+        try {
+            Optional<Province> province = provinceService.findById(id);
+            if (province.isPresent()) {
+                ModelAndView modelAndView = new ModelAndView("/province/edit");
+                modelAndView.addObject("province", province.get());
+                return modelAndView;
 
-        } else {
-            ModelAndView modelAndView = new ModelAndView("/error.404");
-            return modelAndView;
+            } else {
+                ModelAndView modelAndView = new ModelAndView("/error.404");
+                return modelAndView;
+            }
+        }catch (Exception e) {
+            return new ModelAndView("redirect:/customers");
         }
     }
 
@@ -73,16 +77,20 @@ public class ProvinceController {
 
     @GetMapping("/delete-province/{id}")
     public ModelAndView showDeleteForm(@PathVariable Long id) {
-        Optional<Province> province = provinceService.findById(id);
-        ModelAndView modelAndView;
-        if (province.isPresent()) {
-            modelAndView = new ModelAndView("/province/delete");
-            modelAndView.addObject("province", province.get());
-            return modelAndView;
+        try{
+            Optional<Province> province = provinceService.findById(id);
+            ModelAndView modelAndView;
+            if (province.isPresent()) {
+                modelAndView = new ModelAndView("/province/delete");
+                modelAndView.addObject("province", province.get());
+                return modelAndView;
 
-        } else {
-            modelAndView = new ModelAndView("/error.404");
-            return modelAndView;
+            } else {
+                modelAndView = new ModelAndView("/error.404");
+                return modelAndView;
+            }
+        }catch (Exception e){
+            return new ModelAndView("redirect:/customers");
         }
     }
 
@@ -94,14 +102,18 @@ public class ProvinceController {
 
     @GetMapping("/view-province/{id}")
     public ModelAndView viewProvince(@PathVariable("id") Long id){
-        Optional<Province> provinceOptional = provinceService.findById(id);
-        if(!provinceOptional.isPresent()){
-            return new ModelAndView("/error.404");
+        try {
+            Optional<Province> provinceOptional = provinceService.findById(id);
+            if(!provinceOptional.isPresent()){
+                return new ModelAndView("/error.404");
+            }
+            Iterable<Customer> customers = customerService.findAllByProvince(provinceOptional.get());
+            ModelAndView modelAndView = new ModelAndView("/province/view");
+            modelAndView.addObject("province", provinceOptional.get());
+            modelAndView.addObject("customers", customers);
+            return modelAndView;
+        }catch (Exception e){
+            return new ModelAndView("redirect:/customers");
         }
-        Iterable<Customer> customers = customerService.findAllByProvince(provinceOptional.get());
-        ModelAndView modelAndView = new ModelAndView("/province/view");
-        modelAndView.addObject("province", provinceOptional.get());
-        modelAndView.addObject("customers", customers);
-        return modelAndView;
     }
 }

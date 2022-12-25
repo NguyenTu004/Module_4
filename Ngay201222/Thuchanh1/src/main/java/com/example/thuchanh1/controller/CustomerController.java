@@ -46,23 +46,31 @@ public class CustomerController {
 
     @GetMapping("/customers")
     public ModelAndView listCustomers(Pageable pageable) {
+        try {
 //        Iterable<Customer> customers = customerService.findAll();
-        Page<Customer> customers = customerService.findAll(pageable);
-        ModelAndView modelAndView = new ModelAndView("/customer/list");
-        modelAndView.addObject("customers", customers);
-        return modelAndView;
+            Page<Customer> customers = customerService.findAll(pageable);
+            ModelAndView modelAndView = new ModelAndView("/customer/list");
+            modelAndView.addObject("customers", customers);
+            return modelAndView;
+        }catch (Exception e) {
+            return new ModelAndView("redirect:/customers");
+        }
     }
 
     @GetMapping("/edit-customer/{id}")
     public ModelAndView showEditForm(@PathVariable Long id) {
-        Optional<Customer> customer = customerService.findById(id);
-        if (customer.isPresent()) {
-            ModelAndView modelAndView = new ModelAndView("/customer/edit");
-            modelAndView.addObject("customer", customer.get());
-            return modelAndView;
-        } else {
-            ModelAndView modelAndView = new ModelAndView("/error.404");
-            return modelAndView;
+        try {
+            Optional<Customer> customer = customerService.findById(id);
+            if (customer.isPresent()) {
+                ModelAndView modelAndView = new ModelAndView("/customer/edit");
+                modelAndView.addObject("customer", customer.get());
+                return modelAndView;
+            } else {
+                ModelAndView modelAndView = new ModelAndView("/error.404");
+                return modelAndView;
+            }
+        }catch (Exception e) {
+            return new ModelAndView("redirect:/customers");
         }
     }
 
@@ -77,16 +85,20 @@ public class CustomerController {
 
     @GetMapping("/delete-customer/{id}")
     public ModelAndView showDeleteForm(@PathVariable Long id) {
-        Optional<Customer> customer = customerService.findById(id);
-        ModelAndView modelAndView;
-        if (customer.isPresent()) {
-            modelAndView = new ModelAndView("/customer/delete");
-            modelAndView.addObject("customer", customer.get());
-            return modelAndView;
+        try {
+            Optional<Customer> customer = customerService.findById(id);
+            ModelAndView modelAndView;
+            if (customer.isPresent()) {
+                modelAndView = new ModelAndView("/customer/delete");
+                modelAndView.addObject("customer", customer.get());
+                return modelAndView;
 
-        } else {
-            modelAndView = new ModelAndView("/error.404");
-            return modelAndView;
+            } else {
+                modelAndView = new ModelAndView("/error.404");
+                return modelAndView;
+            }
+        }catch (Exception e) {
+            return new ModelAndView("redirect:/customers");
         }
     }
 
@@ -97,15 +109,19 @@ public class CustomerController {
     }
     @PostMapping("/customers")
     public ModelAndView listCustomers(@RequestParam("search") Optional<String> search, Pageable pageable){
-        Page<Customer> customers;
-        if(search.isPresent()){
-            customers = customerService.findAllByFirstNameContaining(search.get(), pageable);
-        } else {
-            customers = customerService.findAll(pageable);
+        try {
+            Page<Customer> customers;
+            if (search.isPresent()) {
+                customers = customerService.findAllByFirstNameContaining(search.get(), pageable);
+            } else {
+                customers = customerService.findAll(pageable);
+            }
+            ModelAndView modelAndView = new ModelAndView("/customer/list");
+            modelAndView.addObject("customers", customers);
+            return modelAndView;
+        }catch (Exception e){
+            return new ModelAndView("redirect:/customers");
         }
-        ModelAndView modelAndView = new ModelAndView("/customer/list");
-        modelAndView.addObject("customers", customers);
-        return modelAndView;
     }
 
 }

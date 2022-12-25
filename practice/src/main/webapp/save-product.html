@@ -43,7 +43,7 @@
                 <td>
                     <img th:if="${product.id} != 0 " width="100" height="100" th:src="@{'/image/' + ${product.img}}" alt="" />
                     <br th:if="${product.id} != 0 "/>
-                    <input type="file" name="file" />
+                    <input type="file" name="file" th:default="${product.img}"/>
                 </td>
             </tr>
             <tr>
