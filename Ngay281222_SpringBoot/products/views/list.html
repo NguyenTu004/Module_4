@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="js/list_product.js"></script>
+    <script src="js/list_category.js"></script>
+</head>
+<body onload="successHandler();findAllCategory()">
+<div class="container">
+    <h1>List product</h1>
+    <button class="btn btn-primary" onclick="displayCreateForm()">Creat product</button>
+    <button class="btn btn-primary" onclick="displayCreateFormCategory()">Creat category</button>
+    <form >
+        <input type="text" id="search">
+        <button type="button" onclick="searchProduct()">Search</button>
+    </form>
+    <table class="table table-striped" id="listForm">
+
+    </table>
+</div>
+<div class="container" >
+    <div id="createForm" hidden="" >
+        <h1 id="saveHead"></h1>
+        <form >
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <td><input type="text" id="name" required></td>
+                </tr>
+                <tr>
+                    <th>Price</th>
+                    <td><input type="text" id="price" required></td>
+                </tr>
+                <tr>
+                    <th>Quantity</th>
+                    <td><input type="text" id="quantity" required></td>
+                </tr>
+                <tr>
+                    <th>Category</th>
+                    <td id="listCategory"></td>
+                </tr>
+                <tr>
+                    <th colspan="2">
+                        <button onclick="createProduct()">Save</button>
+                    </th>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div id="createFormCategory" hidden="" >
+        <h1 >Create category</h1>
+        <form >
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <td><input type="text" id="nameCategory" required></td>
+                </tr>
+                <tr>
+                    <th colspan="2">
+                        <button type="submit" onclick="createCategory()">Save</button>
+                    </th>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+<div class="container" >
+   <div >
+       <h1>List category</h1>
+       <table class="table table-striped" id="listCategoryForm">
+
+       </table>
+   </div>
+</div>
+</body>
+</html>
